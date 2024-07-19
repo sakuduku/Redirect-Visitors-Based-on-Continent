@@ -1,0 +1,23 @@
+<script>
+var endpoint = 'https://apip.cc/json'; // URL of the API that provides continent data
+var xhr = new XMLHttpRequest(); // Create a new XMLHttpRequest object
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var response = JSON.parse(this.responseText); // Parse the JSON response
+        if(response.status !== 'success') {
+            console.log('Query failed: ' + response.message); // Log error if the response status is not 'success'
+            return;
+        }
+        // Redirect based on the continent code
+        switch(response.ContinentCode) {
+            case "EU": // European Union
+                window.location.replace("https://google.co.uk/"); // Redirect to UK Google
+                break;
+            default:
+                window.location.replace("https://google.com/?default"); // Redirect to default Google page
+        }
+    }
+};
+xhr.open('GET', endpoint, true); // Open a GET request to the API endpoint
+xhr.send(); // Send the request
+</script>
